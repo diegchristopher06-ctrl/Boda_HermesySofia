@@ -25,17 +25,16 @@
 
     <style>
         :root {
-            --bg-body: #FAF5F6;
-            --rosa-palo: #FDF0F4;
-            --rosa-rubor: #F4C2C2;
-            --rosa-acento: #E892A0;
+            --bg-body: #FDFBF7; /* Blanco cálido / Marfil suave */
+            --champan-claro: #F5EFE6;
+            --champan-medio: #E8DFD3;
             --blanco: #FFFFFF;
-            --negro-azabache: #1A1A1A;
-            --negro-suave: #222222;
-            --gris-texto: #555555;
-            --dorado: #D4AF37;
-            --sombra-suave: 0 10px 30px rgba(232, 146, 160, 0.25);
-            --sombra-card: 0 4px 25px rgba(0, 0, 0, 0.08);
+            --negro-azabache: #111111;
+            --gris-texto: #444444;
+            --dorado: #C5A059;
+            --dorado-brillo: #D4AF37;
+            --sombra-elegante: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -54,24 +53,6 @@
             min-height: 100vh;
         }
 
-        /* FONDO INTERACTIVO CON MARCA DE AGUA */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('boda.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            opacity: 0.07;
-            z-index: -1;
-            pointer-events: none;
-            filter: blur(2px);
-        }
-
         .font-script { font-family: 'Alex Brush', cursive; }
         .font-serif { font-family: 'Cinzel', serif; }
 
@@ -82,7 +63,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(250, 245, 246, 0.98);
+            background-color: var(--bg-body);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -96,63 +77,64 @@
             position: relative;
             width: 320px;
             height: 220px;
-            background-color: var(--rosa-rubor);
-            border-radius: 10px;
-            box-shadow: var(--sombra-suave);
+            background-color: var(--blanco);
+            border: 2px solid var(--negro-azabache);
+            border-radius: 6px;
+            box-shadow: var(--sombra-elegante);
             display: flex;
             justify-content: center;
             align-items: center;
             perspective: 1000px;
         }
 
-        /* Solapa superior del sobre */
+        /* Solapa superior del sobre (Blanca con borde negro) */
         .envelope-wrapper::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
+            top: -2px;
+            left: -2px;
             width: 0;
             height: 0;
             border-left: 160px solid transparent;
             border-right: 160px solid transparent;
-            border-top: 120px solid var(--rosa-acento);
+            border-top: 120px solid var(--blanco);
             transform-origin: top;
             transition: transform 0.8s ease;
             z-index: 3;
+            filter: drop-shadow(0px 2px 0px var(--negro-azabache));
         }
 
         /* Bordes inferiores del sobre */
         .envelope-wrapper::after {
             content: "";
             position: absolute;
-            bottom: 0;
-            left: 0;
+            bottom: -2px;
+            left: -2px;
             width: 0;
             height: 0;
-            border-left: 160px solid var(--rosa-palo);
-            border-right: 160px solid var(--rosa-palo);
-            border-bottom: 110px solid var(--rosa-palo);
-            border-radius: 0 0 10px 10px;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-bottom: 110px solid var(--champan-claro);
             z-index: 2;
         }
 
         /* Sello Dorado del sobre */
         .envelope-seal {
             position: absolute;
-            top: 85px;
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, #F3E5AB, var(--dorado));
+            top: 80px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #F3E5AB, var(--dorado-brillo));
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: var(--negro-azabache);
-            font-size: 1.4rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 4;
             border: 2px solid #FFF;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s ease, opacity 0.5s ease;
         }
 
         .envelope-title {
@@ -160,6 +142,7 @@
             font-size: 2.2rem;
             color: var(--negro-azabache);
             text-align: center;
+            letter-spacing: 2px;
         }
 
         .btn-open {
@@ -167,19 +150,21 @@
             padding: 14px 35px;
             background: var(--negro-azabache);
             color: var(--blanco);
-            border: none;
+            border: 1px solid var(--negro-azabache);
             border-radius: 30px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             cursor: pointer;
-            box-shadow: var(--sombra-suave);
+            box-shadow: var(--sombra-elegante);
             transition: all 0.3s ease;
             z-index: 10;
         }
 
         .btn-open:hover {
-            background: var(--rosa-acento);
+            background: var(--dorado);
+            border-color: var(--dorado);
+            color: var(--blanco);
             transform: scale(1.05);
         }
 
@@ -217,7 +202,7 @@
             z-index: 1;
         }
 
-        /* --- PORTADA HERO (MÁS GRANDE) --- */
+        /* --- PORTADA HERO --- */
         .hero {
             text-align: center;
             padding: 30px 10px;
@@ -227,26 +212,26 @@
             position: relative;
             display: inline-block;
             margin-bottom: 25px;
-            border-radius: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: var(--sombra-suave);
-            border: 2px solid var(--rosa-rubor);
+            border-radius: 16px;
+            padding: 12px;
+            background: var(--blanco);
+            box-shadow: var(--sombra-card);
+            border: 1px solid var(--negro-azabache);
             max-width: 100%;
         }
 
         .hero-img {
             max-width: 100%;
-            width: 500px; /* Portada en grande */
+            width: 500px;
             height: auto;
-            border-radius: 14px;
+            border-radius: 10px;
             display: block;
             margin: 0 auto;
         }
 
         .hero-title {
-            font-size: 3.2rem;
-            letter-spacing: 5px;
+            font-size: 3rem;
+            letter-spacing: 6px;
             color: var(--negro-azabache);
             margin-bottom: 5px;
             font-weight: 700;
@@ -254,26 +239,25 @@
 
         .hero-subtitle {
             font-size: 2.8rem;
-            color: var(--negro-suave);
+            color: var(--dorado);
             margin-bottom: 10px;
         }
 
         /* --- CUENTA ATRÁS --- */
         .countdown-container {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(5px);
-            border-radius: 18px;
+            background: var(--blanco);
+            border-radius: 16px;
             padding: 25px 15px;
             margin: 30px 0;
-            box-shadow: var(--sombra-suave);
-            border: 1px solid var(--rosa-rubor);
+            box-shadow: var(--sombra-card);
+            border: 1px solid var(--champan-medio);
             text-align: center;
         }
 
         .countdown-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: var(--gris-texto);
             margin-bottom: 15px;
         }
@@ -286,11 +270,11 @@
         }
 
         .time-box {
-            background: var(--rosa-palo);
-            border-radius: 12px;
+            background: var(--champan-claro);
+            border-radius: 10px;
             padding: 12px 20px;
             min-width: 80px;
-            border: 1px solid var(--rosa-rubor);
+            border: 1px solid var(--champan-medio);
         }
 
         .time-number {
@@ -307,7 +291,7 @@
             color: var(--gris-texto);
         }
 
-        /* --- DETALLES DEL EVENTO (FECHA, LUGAR, HORA) --- */
+        /* --- DETALLES DEL EVENTO --- */
         .details-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -316,44 +300,44 @@
         }
 
         .detail-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--blanco);
             padding: 30px 20px;
-            border-radius: 18px;
+            border-radius: 16px;
             text-align: center;
             box-shadow: var(--sombra-card);
-            border: 1px solid var(--rosa-palo);
+            border: 1px solid var(--champan-medio);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .detail-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--sombra-suave);
+            box-shadow: var(--sombra-elegante);
         }
 
         .detail-icon {
-            width: 65px;
-            height: 65px;
-            background: var(--rosa-palo);
+            width: 60px;
+            height: 60px;
+            background: var(--champan-claro);
             color: var(--negro-azabache);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px;
-            font-size: 1.6rem;
-            border: 1px solid var(--rosa-rubor);
+            font-size: 1.5rem;
+            border: 1px solid var(--champan-medio);
         }
 
         .detail-title {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: var(--gris-texto);
             margin-bottom: 8px;
         }
 
         .detail-text {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--negro-azabache);
         }
@@ -364,7 +348,7 @@
             padding: 9px 18px;
             background: transparent;
             color: var(--negro-azabache);
-            border: 1.5px solid var(--negro-azabache);
+            border: 1px solid var(--negro-azabache);
             border-radius: 20px;
             font-size: 0.85rem;
             text-decoration: none;
@@ -379,12 +363,12 @@
 
         /* --- FORMULARIO RSVP --- */
         .rsvp-section {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 20px;
+            background: var(--blanco);
+            border-radius: 18px;
             padding: 40px 30px;
             margin: 40px 0;
-            box-shadow: var(--sombra-suave);
-            border: 1.5px solid var(--rosa-rubor);
+            box-shadow: var(--sombra-card);
+            border: 1px solid var(--negro-azabache);
         }
 
         .rsvp-header {
@@ -396,6 +380,7 @@
             font-size: 2.2rem;
             color: var(--negro-azabache);
             margin-bottom: 8px;
+            letter-spacing: 1px;
         }
 
         .rsvp-subtitle {
@@ -411,7 +396,7 @@
             display: block;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             font-weight: 600;
             margin-bottom: 8px;
             color: var(--negro-azabache);
@@ -420,9 +405,9 @@
         .form-input, .form-select {
             width: 100%;
             padding: 14px 16px;
-            border: 1px solid var(--rosa-rubor);
-            border-radius: 10px;
-            background-color: var(--rosa-palo);
+            border: 1px solid var(--champan-medio);
+            border-radius: 8px;
+            background-color: var(--champan-claro);
             font-family: inherit;
             font-size: 1rem;
             color: var(--negro-azabache);
@@ -431,7 +416,7 @@
         }
 
         .form-input:focus, .form-select:focus {
-            border-color: var(--rosa-acento);
+            border-color: var(--negro-azabache);
             background-color: var(--blanco);
         }
 
@@ -444,16 +429,16 @@
         .radio-option {
             display: flex;
             align-items: center;
-            background: var(--rosa-palo);
+            background: var(--champan-claro);
             padding: 14px 16px;
-            border-radius: 10px;
-            border: 1px solid var(--rosa-rubor);
+            border-radius: 8px;
+            border: 1px solid var(--champan-medio);
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .radio-option:hover {
-            border-color: var(--rosa-acento);
+            border-color: var(--negro-azabache);
         }
 
         .radio-option input[type="radio"] {
@@ -473,25 +458,25 @@
         .btn-submit {
             width: 100%;
             padding: 16px;
-            background: var(--rosa-acento);
+            background: var(--negro-azabache);
             color: var(--blanco);
-            border: none;
+            border: 1px solid var(--negro-azabache);
             border-radius: 30px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(232, 146, 160, 0.4);
+            box-shadow: var(--sombra-card);
             margin-top: 10px;
         }
 
         .btn-submit:hover {
-            background: var(--negro-azabache);
+            background: var(--dorado);
+            border-color: var(--dorado);
             color: var(--blanco);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         footer {
@@ -499,6 +484,7 @@
             padding: 30px 0;
             font-size: 0.9rem;
             color: var(--gris-texto);
+            letter-spacing: 1px;
         }
 
         @media (max-width: 600px) {
@@ -511,7 +497,7 @@
             .envelope-wrapper { width: 280px; height: 190px; }
             .envelope-wrapper::before { border-left-width: 140px; border-right-width: 140px; border-top-width: 100px; }
             .envelope-wrapper::after { border-left-width: 140px; border-right-width: 140px; border-bottom-width: 95px; }
-            .envelope-seal { top: 70px; width: 55px; height: 55px; font-size: 1.2rem; }
+            .envelope-seal { top: 65px; width: 55px; height: 55px; font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -525,7 +511,7 @@
             </div>
         </div>
         <h2 class="envelope-title font-serif">Hermes & Sofía</h2>
-        <p class="font-script" style="font-size: 2rem; color: var(--gris-texto);">Nuestra Invitación de Boda</p>
+        <p class="font-script" style="font-size: 2rem; color: var(--dorado);">Nuestra Invitación de Boda</p>
         <button class="btn-open font-serif" id="openBtn">Abrir Invitación</button>
     </div>
 
@@ -535,7 +521,7 @@
             <!-- 1. PORTADA HERO -->
             <header class="hero">
                 <div class="image-frame">
-                    <img src="boda.jpg" alt="Hermes & Sofía" class="hero-img" onerror="this.src='https://via.placeholder.com/500x650/FDF0F4/1A1A1A?text=Hermes+%26+Sof%C3%ADa'">
+                    <img src="boda.jpg" alt="Hermes & Sofía" class="hero-img" onerror="this.src='https://via.placeholder.com/500x650/F5EFE6/111111?text=Hermes+%26+Sof%C3%ADa'">
                 </div>
                 <p class="hero-subtitle font-script">Save Our Date</p>
                 <h1 class="hero-title font-serif">HERMES & SOFÍA</h1>
@@ -706,10 +692,10 @@
                     title: '¡Muchas Gracias!',
                     text: 'Tu respuesta ha sido enviada con éxito.',
                     icon: 'success',
-                    confirmButtonColor: '#1A1A1A',
+                    confirmButtonColor: '#111111',
                     confirmButtonText: 'Cerrar',
                     background: '#FFFFFF',
-                    color: '#1A1A1A'
+                    color: '#111111'
                 });
                 form.reset();
             }).catch(error => {
@@ -717,7 +703,7 @@
                     title: '¡Gracias por responder!',
                     text: 'Se ha registrado tu respuesta correctamente.',
                     icon: 'success',
-                    confirmButtonColor: '#1A1A1A',
+                    confirmButtonColor: '#111111',
                     confirmButtonText: 'Cerrar'
                 });
                 form.reset();
