@@ -768,5 +768,41 @@
             });
         });
     </script>
+
+   <script>
+  const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbymbFApOian9LeKAk1mVBUAnRbUG3I1TOj_xjgz39EmTI75q51xxhtFrdE2kHuqLuYGQg/exec";
+
+  document.getElementById("rsvpForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const datos = {
+      nombre: document.getElementById("nombre").value,
+      apellido: document.getElementById("apellido").value,
+      asiste: document.getElementById("asiste").value, // "si" o "no"
+      cantidad: document.getElementById("cantidad").value
+    };
+
+    fetch(URL_SCRIPT, {
+      method: "POST",
+      mode: "no-cors", // Para evitar problemas de CORS desde el navegador
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos)
+    })
+    .then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Gracias por responder!',
+        text: 'Hemos registrado tu respuesta correctamente.',
+        confirmButtonColor: '#c5a059'
+      });
+      document.getElementById("rsvpForm").reset();
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+  });
+</script>
 </body>
 </html>
