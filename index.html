@@ -32,8 +32,13 @@
             --negro-azabache: #111111;
             --gris-texto: #444444;
             --dorado: #C5A059;
-            --sombra-elegante: 0 10px 30px rgba(0, 0, 0, 0.12);
+            --sombra-elegante: 0 12px 35px rgba(0, 0, 0, 0.15);
             --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+            /* Colores realistas del sobre según la imagen */
+            --sobre-papel: #D5C7B3;
+            --sobre-sombra: #BCAE9B;
+            --sobre-interior: #A89B88;
         }
 
         * {
@@ -55,7 +60,7 @@
         .font-script { font-family: 'Alex Brush', cursive; }
         .font-serif { font-family: 'Cinzel', serif; }
 
-        /* --- PANTALLA DEL SOBRE REALISTA --- */
+        /* --- PANTALLA DEL SOBRE VECTORIAL REALISTA --- */
         #envelope-container {
             position: fixed;
             top: 0;
@@ -68,45 +73,114 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
             padding: 20px;
         }
 
         .envelope-wrapper {
             position: relative;
-            width: 360px;
-            height: 270px;
+            width: 350px;
+            height: 250px;
+            background-color: var(--sobre-papel);
+            border-radius: 6px;
             box-shadow: var(--sombra-elegante);
-            border-radius: 8px;
             perspective: 1000px;
-            background: url('sobre.jpg') center/cover no-repeat;
+            border: 1px solid rgba(0,0,0,0.08);
         }
 
-        /* Solapa Superior Rotativa que usa la parte superior de la imagen */
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 55%;
-            background: url('sobre.jpg') top center/360px 270px no-repeat;
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
-            transform-origin: top;
-            transition: transform 0.8s ease;
-            z-index: 3;
-        }
-
-        /* Cuerpo Base del Sobre */
-        .envelope-body {
+        /* Interior visible al abrir */
+        .envelope-wrapper::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('sobre.jpg') center/cover no-repeat;
-            z-index: 1;
+            background: var(--sobre-interior);
+            border-radius: 6px;
         }
 
+        /* Solapas laterales e inferior del sobre */
+        .envelope-pocket {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Solapa Inferior */
+        .envelope-pocket::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 175px solid transparent;
+            border-right: 175px solid transparent;
+            border-bottom: 140px solid var(--sobre-papel);
+            filter: drop-shadow(0 -2px 3px rgba(0,0,0,0.06));
+        }
+
+        /* Solapas Laterales */
+        .envelope-pocket::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to right, var(--sobre-sombra) 0%, transparent 100%) left / 175px 100% no-repeat,
+                linear-gradient(to left, var(--sobre-sombra) 0%, transparent 100%) right / 175px 100% no-repeat;
+            clip-path: polygon(0 0, 175px 125px, 0 250px, 100% 250px, 175px 125px, 100% 0);
+            opacity: 0.25;
+        }
+
+        /* Solapa Superior Rotativa */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 175px solid transparent;
+            border-right: 175px solid transparent;
+            border-top: 135px solid var(--sobre-papel);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.4s;
+            z-index: 4;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+        }
+
+        /* Sello de Lacre Dorado con Espiga */
+        .wax-seal {
+            position: absolute;
+            top: 105px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 58px;
+            height: 58px;
+            background: radial-gradient(circle, #E5C365 0%, #B88E38 70%, #8A651E 100%);
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255,255,255,0.4);
+            transition: transform 0.6s ease, opacity 0.4s ease;
+        }
+
+        .wax-seal i {
+            color: #5C410F;
+            font-size: 1.6rem;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Títulos e Interacción */
         .envelope-title {
             margin-top: 30px;
             font-size: 2.2rem;
@@ -138,10 +212,15 @@
             transform: scale(1.05);
         }
 
-        /* Animación cuando se presiona el botón */
+        /* Estado de Apertura del Sobre */
         .envelope-wrapper.open .envelope-flap {
             transform: rotateX(180deg);
             z-index: 1;
+        }
+
+        .envelope-wrapper.open .wax-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.5);
         }
 
         .envelope-fade-out {
@@ -167,7 +246,7 @@
             z-index: 1;
         }
 
-        /* --- PORTADA HERO --- */
+        /* PORTADA HERO */
         .hero {
             text-align: center;
             padding: 30px 10px;
@@ -208,7 +287,7 @@
             margin-bottom: 10px;
         }
 
-        /* --- CUENTA ATRÁS --- */
+        /* CUENTA ATRÁS */
         .countdown-container {
             background: var(--blanco);
             border-radius: 16px;
@@ -256,7 +335,7 @@
             color: var(--gris-texto);
         }
 
-        /* --- DETALLES DEL EVENTO --- */
+        /* DETALLES DEL EVENTO */
         .details-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -326,7 +405,7 @@
             color: var(--blanco);
         }
 
-        /* --- FORMULARIO RSVP --- */
+        /* FORMULARIO RSVP */
         .rsvp-section {
             background: var(--blanco);
             border-radius: 18px;
@@ -453,8 +532,11 @@
         }
 
         @media (max-width: 600px) {
-            .envelope-wrapper { width: 300px; height: 225px; }
-            .envelope-flap { background-size: 300px 225px; }
+            .envelope-wrapper { width: 300px; height: 215px; }
+            .envelope-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 115px; }
+            .envelope-pocket::after { border-left-width: 150px; border-right-width: 150px; border-bottom-width: 120px; }
+            .wax-seal { top: 90px; width: 50px; height: 50px; }
+            .wax-seal i { font-size: 1.3rem; }
             .hero-title { font-size: 2.2rem; }
             .hero-subtitle { font-size: 2.2rem; }
             .hero-img { width: 100%; }
@@ -466,11 +548,14 @@
 </head>
 <body>
 
-    <!-- ✉️ SOBRE REALISTA CON ANIMACIÓN DE APERTURA -->
+    <!-- ✉️ SOBRE VECTORIAL CON SELLO DE LACRE Y ANIMACIÓN 3D PERFECTA -->
     <div id="envelope-container">
         <div class="envelope-wrapper" id="envelope">
             <div class="envelope-flap"></div>
-            <div class="envelope-body"></div>
+            <div class="wax-seal">
+                <i class="fa-solid fa-wheat-awn"></i>
+            </div>
+            <div class="envelope-pocket"></div>
         </div>
         <h2 class="envelope-title font-serif">Hermes & Sofía</h2>
         <p class="font-script" style="font-size: 2rem; color: var(--dorado);">Nuestra Invitación de Boda</p>
