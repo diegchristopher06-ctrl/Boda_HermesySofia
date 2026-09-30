@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boda Hermes & Sofía - Save Our Date</title>
 
-    <!-- ETIOQUETAS PARA VISTA PREVIA EN WHATSAPP Y REDES SOCIALES -->
+    <!-- ETIQUETAS PARA VISTA PREVIA EN WHATSAPP Y REDES SOCIALES -->
     <meta property="og:title" content="Boda Hermes & Sofía — 03 de Octubre 2026">
-    <meta property="og:description" content="¡Acompáñanos a celebrar nuestro gran día! Confirma tu asistencia aquí.">
+    <meta property="og:description" content="¡Acompáñanos a celebrar nuestro gran día! Haz clic para abrir nuestra invitación.">
     <meta property="og:image" content="boda.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:type" content="website">
@@ -33,7 +33,8 @@
             --negro-azabache: #1A1A1A;
             --negro-suave: #222222;
             --gris-texto: #555555;
-            --sombra-suave: 0 10px 30px rgba(232, 146, 160, 0.2);
+            --dorado: #D4AF37;
+            --sombra-suave: 0 10px 30px rgba(232, 146, 160, 0.25);
             --sombra-card: 0 4px 25px rgba(0, 0, 0, 0.08);
         }
 
@@ -50,9 +51,10 @@
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
         }
 
-        /* FONDO INTERACTIVO DE PANTALLA COMPLETA AL HACER SCROLL */
+        /* FONDO INTERACTIVO CON MARCA DE AGUA */
         body::before {
             content: "";
             position: fixed;
@@ -64,7 +66,7 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            opacity: 0.08; /* Marca de agua sutil en los laterales */
+            opacity: 0.07;
             z-index: -1;
             pointer-events: none;
             filter: blur(2px);
@@ -72,6 +74,140 @@
 
         .font-script { font-family: 'Alex Brush', cursive; }
         .font-serif { font-family: 'Cinzel', serif; }
+
+        /* --- PANTALLA DEL SOBRE (ENVELOPE SCREEN) --- */
+        #envelope-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(250, 245, 246, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+            padding: 20px;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background-color: var(--rosa-rubor);
+            border-radius: 10px;
+            box-shadow: var(--sombra-suave);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* Solapa superior del sobre */
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 120px solid var(--rosa-acento);
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 3;
+        }
+
+        /* Bordes inferiores del sobre */
+        .envelope-wrapper::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid var(--rosa-palo);
+            border-right: 160px solid var(--rosa-palo);
+            border-bottom: 110px solid var(--rosa-palo);
+            border-radius: 0 0 10px 10px;
+            z-index: 2;
+        }
+
+        /* Sello Dorado del sobre */
+        .envelope-seal {
+            position: absolute;
+            top: 85px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #F3E5AB, var(--dorado));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--negro-azabache);
+            font-size: 1.4rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 4;
+            border: 2px solid #FFF;
+            transition: transform 0.5s ease;
+        }
+
+        .envelope-title {
+            margin-top: 35px;
+            font-size: 2.2rem;
+            color: var(--negro-azabache);
+            text-align: center;
+        }
+
+        .btn-open {
+            margin-top: 20px;
+            padding: 14px 35px;
+            background: var(--negro-azabache);
+            color: var(--blanco);
+            border: none;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: var(--sombra-suave);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .btn-open:hover {
+            background: var(--rosa-acento);
+            transform: scale(1.05);
+        }
+
+        /* Animación cuando se abre el sobre */
+        .envelope-wrapper.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-wrapper.open .envelope-seal {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .envelope-fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- SITIO WEB PRINCIPAL --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
 
         .container {
             max-width: 850px;
@@ -81,7 +217,7 @@
             z-index: 1;
         }
 
-        /* --- PORTADA / HERO (MÁS GRANDE Y DESTACADA) --- */
+        /* --- PORTADA HERO (MÁS GRANDE) --- */
         .hero {
             text-align: center;
             padding: 30px 10px;
@@ -101,7 +237,7 @@
 
         .hero-img {
             max-width: 100%;
-            width: 480px; /* Tamaño aumentado */
+            width: 500px; /* Portada en grande */
             height: auto;
             border-radius: 14px;
             display: block;
@@ -109,7 +245,7 @@
         }
 
         .hero-title {
-            font-size: 3rem;
+            font-size: 3.2rem;
             letter-spacing: 5px;
             color: var(--negro-azabache);
             margin-bottom: 5px;
@@ -372,126 +508,162 @@
             .time-box { min-width: 65px; padding: 8px 12px; }
             .time-number { font-size: 1.5rem; }
             .rsvp-section { padding: 25px 18px; }
+            .envelope-wrapper { width: 280px; height: 190px; }
+            .envelope-wrapper::before { border-left-width: 140px; border-right-width: 140px; border-top-width: 100px; }
+            .envelope-wrapper::after { border-left-width: 140px; border-right-width: 140px; border-bottom-width: 95px; }
+            .envelope-seal { top: 70px; width: 55px; height: 55px; font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- 1. PORTADA / HERO -->
-        <header class="hero">
-            <div class="image-frame">
-                <img src="boda.jpg" alt="Hermes & Sofía" class="hero-img" onerror="this.src='https://via.placeholder.com/480x600/FDF0F4/1A1A1A?text=Hermes+%26+Sof%C3%ADa'">
+    <!-- ✉️ SOBRE INTERACTIVO DE ENTRADA -->
+    <div id="envelope-container">
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope-seal">
+                <i class="fa-solid fa-heart"></i>
             </div>
-            <p class="hero-subtitle font-script">Save Our Date</p>
-            <h1 class="hero-title font-serif">HERMES & SOFÍA</h1>
-        </header>
+        </div>
+        <h2 class="envelope-title font-serif">Hermes & Sofía</h2>
+        <p class="font-script" style="font-size: 2rem; color: var(--gris-texto);">Nuestra Invitación de Boda</p>
+        <button class="btn-open font-serif" id="openBtn">Abrir Invitación</button>
+    </div>
 
-        <!-- 2. CUENTA ATRÁS -->
-        <section class="countdown-container">
-            <h2 class="countdown-title font-serif">Tiempo restante para el gran día</h2>
-            <div class="countdown-timer">
-                <div class="time-box">
-                    <span class="time-number" id="days">00</span>
-                    <span class="time-label">Días</span>
+    <!-- 🌐 SITIO WEB PRINCIPAL DE LA BODA -->
+    <div id="main-content">
+        <div class="container">
+            <!-- 1. PORTADA HERO -->
+            <header class="hero">
+                <div class="image-frame">
+                    <img src="boda.jpg" alt="Hermes & Sofía" class="hero-img" onerror="this.src='https://via.placeholder.com/500x650/FDF0F4/1A1A1A?text=Hermes+%26+Sof%C3%ADa'">
                 </div>
-                <div class="time-box">
-                    <span class="time-number" id="hours">00</span>
-                    <span class="time-label">Horas</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-number" id="minutes">00</span>
-                    <span class="time-label">Min</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-number" id="seconds">00</span>
-                    <span class="time-label">Seg</span>
-                </div>
-            </div>
-        </section>
+                <p class="hero-subtitle font-script">Save Our Date</p>
+                <h1 class="hero-title font-serif">HERMES & SOFÍA</h1>
+            </header>
 
-        <!-- 3, 4 y 5. DETALLES DEL EVENTO -->
-        <section class="details-grid">
-            <!-- REQUERIMIENTO 3: FECHA -->
-            <div class="detail-card">
-                <div class="detail-icon">
-                    <i class="fa-regular fa-calendar-days"></i>
-                </div>
-                <div class="detail-title font-serif">Fecha</div>
-                <div class="detail-text">Sábado 03 de Octubre 2026</div>
-            </div>
-
-            <!-- REQUERIMIENTO 4: LUGAR -->
-            <div class="detail-card">
-                <div class="detail-icon">
-                    <i class="fa-solid fa-church"></i>
-                </div>
-                <div class="detail-title font-serif">Lugar</div>
-                <div class="detail-text">Iglesia Frater</div>
-                <a href="https://maps.google.com/?q=Iglesia+Frater" target="_blank" class="btn-maps">
-                    <i class="fa-solid fa-location-dot"></i> Ver en Google Maps
-                </a>
-            </div>
-
-            <!-- REQUERIMIENTO 5: HORA -->
-            <div class="detail-card">
-                <div class="detail-icon">
-                    <i class="fa-regular fa-clock"></i>
-                </div>
-                <div class="detail-title font-serif">Hora</div>
-                <div class="detail-text">Hora: 3:00 PM</div>
-            </div>
-        </section>
-
-        <!-- 6. MINI FORMULARIO RSVP -->
-        <section class="rsvp-section">
-            <div class="rsvp-header">
-                <h2 class="rsvp-title font-serif">Confirmación de Asistencia</h2>
-                <p class="rsvp-subtitle">Por favor confirma tu presencia antes del evento</p>
-            </div>
-
-            <form id="rsvpForm" action="https://formspree.io/f/TU_FORM_ID" method="POST">
-                <div class="form-group">
-                    <label class="form-label" for="nombre">Nombre y Apellido</label>
-                    <input type="text" id="nombre" name="nombre_completo" class="form-input" placeholder="Ej. Juan Pérez" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="personas">Número de personas</label>
-                    <select id="personas" name="numero_personas" class="form-select" required>
-                        <option value="1">1 Persona</option>
-                        <option value="2">2 Personas</option>
-                        <option value="3">3 Personas</option>
-                        <option value="4">4 Personas</option>
-                        <option value="5">5 Personas</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">¿Nos acompañarás?</label>
-                    <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="asistencia" value="Acepto invitación / ¡Ahí estaré!" required>
-                            <span class="radio-label">Acepto invitación / ¡Ahí estaré!</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="asistencia" value="No podré asistir">
-                            <span class="radio-label">No podré asistir</span>
-                        </label>
+            <!-- 2. CUENTA ATRÁS -->
+            <section class="countdown-container">
+                <h2 class="countdown-title font-serif">Tiempo restante para el gran día</h2>
+                <div class="countdown-timer">
+                    <div class="time-box">
+                        <span class="time-number" id="days">00</span>
+                        <span class="time-label">Días</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-number" id="hours">00</span>
+                        <span class="time-label">Horas</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-number" id="minutes">00</span>
+                        <span class="time-label">Min</span>
+                    </div>
+                    <div class="time-box">
+                        <span class="time-number" id="seconds">00</span>
+                        <span class="time-label">Seg</span>
                     </div>
                 </div>
+            </section>
 
-                <button type="submit" class="btn-submit font-serif">Enviar Confirmación</button>
-            </form>
-        </section>
+            <!-- 3, 4 y 5. DETALLES DEL EVENTO -->
+            <section class="details-grid">
+                <!-- FECHA -->
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+                    <div class="detail-title font-serif">Fecha</div>
+                    <div class="detail-text">Sábado 03 de Octubre 2026</div>
+                </div>
 
-        <footer>
-            <p class="font-serif">Hermes & Sofía — 03.10.2026</p>
-        </footer>
+                <!-- LUGAR -->
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-church"></i>
+                    </div>
+                    <div class="detail-title font-serif">Lugar</div>
+                    <div class="detail-text">Iglesia Frater</div>
+                    <a href="https://maps.google.com/?q=Iglesia+Frater" target="_blank" class="btn-maps">
+                        <i class="fa-solid fa-location-dot"></i> Ver en Google Maps
+                    </a>
+                </div>
+
+                <!-- HORA -->
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div class="detail-title font-serif">Hora</div>
+                    <div class="detail-text">Hora: 3:00 PM</div>
+                </div>
+            </section>
+
+            <!-- 6. MINI FORMULARIO RSVP -->
+            <section class="rsvp-section">
+                <div class="rsvp-header">
+                    <h2 class="rsvp-title font-serif">Confirmación de Asistencia</h2>
+                    <p class="rsvp-subtitle">Por favor confirma tu presencia antes del evento</p>
+                </div>
+
+                <form id="rsvpForm" action="https://formspree.io/f/TU_FORM_ID" method="POST">
+                    <div class="form-group">
+                        <label class="form-label" for="nombre">Nombre y Apellido</label>
+                        <input type="text" id="nombre" name="nombre_completo" class="form-input" placeholder="Ej. Juan Pérez" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="personas">Número de personas</label>
+                        <select id="personas" name="numero_personas" class="form-select" required>
+                            <option value="1">1 Persona</option>
+                            <option value="2">2 Personas</option>
+                            <option value="3">3 Personas</option>
+                            <option value="4">4 Personas</option>
+                            <option value="5">5 Personas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">¿Nos acompañarás?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="asistencia" value="Acepto invitación / ¡Ahí estaré!" required>
+                                <span class="radio-label">Acepto invitación / ¡Ahí estaré!</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="asistencia" value="No podré asistir">
+                                <span class="radio-label">No podré asistir</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit font-serif">Enviar Confirmación</button>
+                </form>
+            </section>
+
+            <footer>
+                <p class="font-serif">Hermes & Sofía — 03.10.2026</p>
+            </footer>
+        </div>
     </div>
 
     <!-- LÓGICA EN JAVASCRIPT -->
     <script>
+        // ANIMACIÓN DE APERTURA DEL SOBRE
+        const openBtn = document.getElementById('openBtn');
+        const envelope = document.getElementById('envelope');
+        const envelopeContainer = document.getElementById('envelope-container');
+        const mainContent = document.getElementById('main-content');
+
+        openBtn.addEventListener('click', () => {
+            envelope.classList.add('open');
+            openBtn.style.opacity = '0';
+            
+            setTimeout(() => {
+                envelopeContainer.classList.add('envelope-fade-out');
+                mainContent.classList.add('visible');
+            }, 800);
+        });
+
+        // CUENTA ATRÁS (03 de Octubre de 2026)
         const targetDate = new Date('October 3, 2026 15:00:00').getTime();
 
         function updateCountdown() {
@@ -516,6 +688,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
+        // MANEJO DEL FORMULARIO RSVP
         const form = document.getElementById('rsvpForm');
 
         form.addEventListener('submit', function(e) {
