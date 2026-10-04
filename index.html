@@ -5,23 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boda Hermes & Sofía - Save Our Date</title>
 
-<!-- ETIQUETAS PARA VISTA PREVIA EN WHATSAPP Y REDES SOCIALES -->
-<meta property="og:title" content="Boda Hermes & Sofía">
-<meta property="og:description" content="¡Acompáñanos a celebrar nuestro gran día!">
-<meta property="og:type" content="website">
-
-<!-- URL CANÓNICA DEL SITIO WEB -->
-<meta property="og:url" content="https://diegchristopher06-ctrl.github.io/Boda_HermesySofia/">
-
-<!-- URL DIRECTA DEL SERVIDOR DE ARCHIVOS (RAW) -->
-<meta property="og:image" content="https://raw.githubusercontent.com/diegchristopher06-ctrl/Boda_HermesySofia/main/boda.png">
-<meta property="og:image:secure_url" content="https://raw.githubusercontent.com/diegchristopher06-ctrl/Boda_HermesySofia/main/boda.png">
-<meta property="og:image:type" content="image/png">
-
-
-<!-- DIMENSIONES DE LA IMAGEN -->
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+    <!-- ETIQUETAS PARA VISTA PREVIA EN WHATSAPP Y REDES SOCIALES -->
+    <meta property="og:title" content="Boda Hermes & Sofía">
+    <meta property="og:description" content="¡Acompáñanos a celebrar nuestro gran día!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://diegchristopher06-ctrl.github.io/Boda_HermesySofia/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/diegchristopher06-ctrl/Boda_HermesySofia/main/boda.png">
+    <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/diegchristopher06-ctrl/Boda_HermesySofia/main/boda.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     
     <!-- Fuentes Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,20 +29,23 @@
 
     <style>
         :root {
-            --bg-body: #FDFBF7;
-            --champan-claro: #F5EFE6;
-            --champan-medio: #E8DFD3;
+            /* TEMÁTICA VERDE MUSGO, BLANCO, GRIS Y DORADO */
+            --bg-body: #F4F6F4;
             --blanco: #FFFFFF;
-            --negro-azabache: #111111;
-            --gris-texto: #444444;
-            --dorado: #C5A059;
-            --sombra-elegante: 0 12px 35px rgba(0, 0, 0, 0.15);
-            --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --verde-musgo: #4A5D4E;
+            --verde-musgo-oscuro: #3B4A3E;
+            --verde-musgo-claro: #EAF0EC;
+            --dorado: #D4AF37;
+            --dorado-claro: #F4E8C1;
+            --gris-texto: #555555;
+            --gris-claro: #E0E0E0;
+            --sombra-elegante: 0 12px 35px rgba(74, 93, 78, 0.18);
+            --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.06);
 
-            /* Colores realistas del sobre según la imagen */
-            --sobre-papel: #D5C7B3;
-            --sobre-sombra: #BCAE9B;
-            --sobre-interior: #A89B88;
+            /* Colores del sobre */
+            --sobre-papel: #4A5D4E;
+            --sobre-sombra: #3B4A3E;
+            --sobre-interior: #334035;
         }
 
         * {
@@ -61,7 +57,7 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-body);
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
@@ -96,10 +92,9 @@
             border-radius: 6px;
             box-shadow: var(--sombra-elegante);
             perspective: 1000px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* Interior visible al abrir */
         .envelope-wrapper::before {
             content: '';
             position: absolute;
@@ -111,7 +106,6 @@
             border-radius: 6px;
         }
 
-        /* Solapas laterales e inferior del sobre */
         .envelope-pocket {
             position: absolute;
             top: 0;
@@ -122,7 +116,6 @@
             pointer-events: none;
         }
 
-        /* Solapa Inferior */
         .envelope-pocket::after {
             content: '';
             position: absolute;
@@ -133,10 +126,9 @@
             border-left: 175px solid transparent;
             border-right: 175px solid transparent;
             border-bottom: 140px solid var(--sobre-papel);
-            filter: drop-shadow(0 -2px 3px rgba(0,0,0,0.06));
+            filter: drop-shadow(0 -2px 3px rgba(0,0,0,0.15));
         }
 
-        /* Solapas Laterales */
         .envelope-pocket::before {
             content: '';
             position: absolute;
@@ -148,10 +140,9 @@
                 linear-gradient(to right, var(--sobre-sombra) 0%, transparent 100%) left / 175px 100% no-repeat,
                 linear-gradient(to left, var(--sobre-sombra) 0%, transparent 100%) right / 175px 100% no-repeat;
             clip-path: polygon(0 0, 175px 125px, 0 250px, 100% 250px, 175px 125px, 100% 0);
-            opacity: 0.25;
+            opacity: 0.35;
         }
 
-        /* Solapa Superior Rotativa */
         .envelope-flap {
             position: absolute;
             top: 0;
@@ -164,10 +155,9 @@
             transform-origin: top;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.4s;
             z-index: 4;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
-        /* Sello de Lacre Dorado con Espiga */
         .wax-seal {
             position: absolute;
             top: 105px;
@@ -175,27 +165,25 @@
             transform: translateX(-50%);
             width: 58px;
             height: 58px;
-            background: radial-gradient(circle, #E5C365 0%, #B88E38 70%, #8A651E 100%);
+            background: radial-gradient(circle, #F4E8C1 0%, #D4AF37 70%, #AA820A 100%);
             border-radius: 50%;
             z-index: 5;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255,255,255,0.4);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255,255,255,0.6);
             transition: transform 0.6s ease, opacity 0.4s ease;
         }
 
         .wax-seal i {
-            color: #5C410F;
+            color: var(--verde-musgo-oscuro);
             font-size: 1.6rem;
-            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
         }
 
-        /* Títulos e Interacción */
         .envelope-title {
             margin-top: 30px;
             font-size: 2.2rem;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             text-align: center;
             letter-spacing: 2px;
         }
@@ -203,9 +191,9 @@
         .btn-open {
             margin-top: 20px;
             padding: 14px 35px;
-            background: var(--negro-azabache);
+            background: var(--verde-musgo);
             color: var(--blanco);
-            border: 1px solid var(--negro-azabache);
+            border: 1px solid var(--dorado);
             border-radius: 30px;
             font-size: 0.9rem;
             letter-spacing: 2px;
@@ -218,12 +206,11 @@
 
         .btn-open:hover {
             background: var(--dorado);
-            border-color: var(--dorado);
-            color: var(--blanco);
+            border-color: var(--verde-musgo);
+            color: var(--verde-musgo-oscuro);
             transform: scale(1.05);
         }
 
-        /* Estado de Apertura del Sobre */
         .envelope-wrapper.open .envelope-flap {
             transform: rotateX(180deg);
             z-index: 1;
@@ -271,7 +258,7 @@
             padding: 12px;
             background: var(--blanco);
             box-shadow: var(--sombra-card);
-            border: 1px solid var(--negro-azabache);
+            border: 2px solid var(--verde-musgo);
             max-width: 100%;
         }
 
@@ -287,7 +274,7 @@
         .hero-title {
             font-size: 3rem;
             letter-spacing: 6px;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             margin-bottom: 5px;
             font-weight: 700;
         }
@@ -305,7 +292,8 @@
             padding: 25px 15px;
             margin: 30px 0;
             box-shadow: var(--sombra-card);
-            border: 1px solid var(--champan-medio);
+            border: 1px solid var(--gris-claro);
+            border-top: 4px solid var(--verde-musgo);
             text-align: center;
         }
 
@@ -313,7 +301,7 @@
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: var(--gris-texto);
+            color: var(--verde-musgo);
             margin-bottom: 15px;
         }
 
@@ -325,17 +313,17 @@
         }
 
         .time-box {
-            background: var(--champan-claro);
+            background: var(--verde-musgo-claro);
             border-radius: 10px;
             padding: 12px 20px;
             min-width: 80px;
-            border: 1px solid var(--champan-medio);
+            border: 1px solid rgba(74, 93, 78, 0.2);
         }
 
         .time-number {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             display: block;
         }
 
@@ -349,7 +337,7 @@
         /* DETALLES DEL EVENTO */
         .details-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
@@ -360,7 +348,7 @@
             border-radius: 16px;
             text-align: center;
             box-shadow: var(--sombra-card);
-            border: 1px solid var(--champan-medio);
+            border: 1px solid var(--gris-claro);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -372,15 +360,15 @@
         .detail-icon {
             width: 60px;
             height: 60px;
-            background: var(--champan-claro);
-            color: var(--negro-azabache);
+            background: var(--verde-musgo-claro);
+            color: var(--verde-musgo);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px;
             font-size: 1.5rem;
-            border: 1px solid var(--champan-medio);
+            border: 1px solid var(--dorado);
         }
 
         .detail-title {
@@ -394,7 +382,7 @@
         .detail-text {
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
         }
 
         .btn-maps {
@@ -402,8 +390,8 @@
             margin-top: 14px;
             padding: 9px 18px;
             background: transparent;
-            color: var(--negro-azabache);
-            border: 1px solid var(--negro-azabache);
+            color: var(--verde-musgo);
+            border: 1px solid var(--verde-musgo);
             border-radius: 20px;
             font-size: 0.85rem;
             text-decoration: none;
@@ -412,7 +400,7 @@
         }
 
         .btn-maps:hover {
-            background: var(--negro-azabache);
+            background: var(--verde-musgo);
             color: var(--blanco);
         }
 
@@ -423,7 +411,8 @@
             padding: 40px 30px;
             margin: 40px 0;
             box-shadow: var(--sombra-card);
-            border: 1px solid var(--negro-azabache);
+            border: 1px solid var(--gris-claro);
+            border-top: 5px solid var(--dorado);
         }
 
         .rsvp-header {
@@ -433,7 +422,7 @@
 
         .rsvp-title {
             font-size: 2.2rem;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             margin-bottom: 8px;
             letter-spacing: 1px;
         }
@@ -454,24 +443,24 @@
             letter-spacing: 1.5px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
         }
 
         .form-input, .form-select {
             width: 100%;
             padding: 14px 16px;
-            border: 1px solid var(--champan-medio);
+            border: 1px solid var(--gris-claro);
             border-radius: 8px;
-            background-color: var(--champan-claro);
+            background-color: var(--verde-musgo-claro);
             font-family: inherit;
             font-size: 1rem;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             outline: none;
             transition: border-color 0.3s ease;
         }
 
         .form-input:focus, .form-select:focus {
-            border-color: var(--negro-azabache);
+            border-color: var(--verde-musgo);
             background-color: var(--blanco);
         }
 
@@ -484,21 +473,21 @@
         .radio-option {
             display: flex;
             align-items: center;
-            background: var(--champan-claro);
+            background: var(--verde-musgo-claro);
             padding: 14px 16px;
             border-radius: 8px;
-            border: 1px solid var(--champan-medio);
+            border: 1px solid var(--gris-claro);
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .radio-option:hover {
-            border-color: var(--negro-azabache);
+            border-color: var(--verde-musgo);
         }
 
         .radio-option input[type="radio"] {
             margin-right: 12px;
-            accent-color: var(--negro-azabache);
+            accent-color: var(--verde-musgo);
             width: 18px;
             height: 18px;
         }
@@ -506,16 +495,35 @@
         .radio-label {
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--negro-azabache);
+            color: var(--verde-musgo-oscuro);
             cursor: pointer;
+        }
+
+        /* Sección dinamica para el segundo invitado */
+        #acompaniante-container {
+            display: none;
+            background: var(--verde-musgo-claro);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--dorado);
+            margin-bottom: 22px;
+        }
+
+        .acompaniante-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--verde-musgo);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-submit {
             width: 100%;
             padding: 16px;
-            background: var(--negro-azabache);
+            background: var(--verde-musgo);
             color: var(--blanco);
-            border: 1px solid var(--negro-azabache);
+            border: 1px solid var(--dorado);
             border-radius: 30px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -529,8 +537,8 @@
 
         .btn-submit:hover {
             background: var(--dorado);
-            border-color: var(--dorado);
-            color: var(--blanco);
+            border-color: var(--verde-musgo);
+            color: var(--verde-musgo-oscuro);
             transform: translateY(-2px);
         }
 
@@ -608,7 +616,7 @@
                 </div>
             </section>
 
-            <!-- 3, 4 y 5. DETALLES DEL EVENTO -->
+            <!-- 3, 4, 5 y DETALLES ADICIONALES DEL EVENTO -->
             <section class="details-grid">
                 <!-- FECHA -->
                 <div class="detail-card">
@@ -616,18 +624,18 @@
                         <i class="fa-regular fa-calendar-days"></i>
                     </div>
                     <div class="detail-title font-serif">Fecha</div>
-                    <div class="detail-text">Sábado 03 de Octubre 2026</div>
+                    <div class="detail-text">Sábado 14 de Noviembre 2026</div>
                 </div>
 
                 <!-- LUGAR -->
                 <div class="detail-card">
                     <div class="detail-icon">
-                        <i class="fa-solid fa-church"></i>
+                        <i class="fa-solid fa-location-dot"></i>
                     </div>
                     <div class="detail-title font-serif">Lugar</div>
-                    <div class="detail-text">Iglesia Frater</div>
-                    <a href="https://maps.google.com/?q=Iglesia+Frater" target="_blank" class="btn-maps">
-                        <i class="fa-solid fa-location-dot"></i> Ver en Google Maps
+                    <div class="detail-text">Eventos Arizona</div>
+                    <a href="https://maps.google.com/?q=Eventos+Arizona" target="_blank" class="btn-maps">
+                        <i class="fa-solid fa-map-location-dot"></i> Ver en Google Maps
                     </a>
                 </div>
 
@@ -637,7 +645,16 @@
                         <i class="fa-regular fa-clock"></i>
                     </div>
                     <div class="detail-title font-serif">Hora</div>
-                    <div class="detail-text">Hora: 3:00 PM</div>
+                    <div class="detail-text">4:00 PM</div>
+                </div>
+
+                <!-- VESTIMENTA -->
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="detail-title font-serif">Código de Vestimenta</div>
+                    <div class="detail-text">Semiformal</div>
                 </div>
             </section>
 
@@ -649,6 +666,7 @@
                 </div>
 
                 <form id="rsvpForm">
+                    <!-- DATOS PERSONA 1 -->
                     <div class="form-group">
                         <label class="form-label" for="nombre">Nombre</label>
                         <input type="text" id="nombre" class="form-input" placeholder="Ej. Juan" required>
@@ -681,12 +699,25 @@
                         </select>
                     </div>
 
+                    <!-- DATOS PERSONA 2 (ACOMPAÑANTE - DESPLEGABLE) -->
+                    <div id="acompaniante-container">
+                        <div class="acompaniante-title"><i class="fa-solid fa-user-plus"></i> Datos del Acompañante</div>
+                        <div class="form-group">
+                            <label class="form-label" for="nombre2">Nombre del Acompañante</label>
+                            <input type="text" id="nombre2" class="form-input" placeholder="Ej. María">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="apellido2">Apellido del Acompañante</label>
+                            <input type="text" id="apellido2" class="form-input" placeholder="Ej. Gómez">
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn-submit font-serif">Enviar Confirmación</button>
                 </form>
             </section>
 
             <footer>
-                <p class="font-serif">Hermes & Sofía — 03.10.2026</p>
+                <p class="font-serif">Hermes & Sofía — 14.11.2026</p>
             </footer>
         </div>
     </div>
@@ -709,8 +740,8 @@
             }, 800);
         });
 
-        // CUENTA ATRÁS (03 de Octubre de 2026)
-        const targetDate = new Date('October 3, 2026 15:00:00').getTime();
+        // CUENTA ATRÁS (14 de Noviembre de 2026 - 4:00 PM)
+        const targetDate = new Date('November 14, 2026 16:00:00').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -734,19 +765,37 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // MOSTRAR / OCULTAR CAMPO CANTIDAD SEGÚN ASISTENCIA
+        // MOSTRAR / OCULTAR CANTIDAD Y CAMPOS DE ACOMPAÑANTE
         const radiosAsistencia = document.querySelectorAll('input[name="asistencia"]');
         const grupoCantidad = document.getElementById('grupo-cantidad');
+        const selectCantidad = document.getElementById('cantidad');
+        const acompanianteContainer = document.getElementById('acompaniante-container');
+        const nombre2Input = document.getElementById('nombre2');
+        const apellido2Input = document.getElementById('apellido2');
 
-        radiosAsistencia.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.value === 'no') {
-                    grupoCantidad.style.display = 'none';
+        function actualizarVisibilidadCampos() {
+            const opcionAsiste = document.querySelector('input[name="asistencia"]:checked').value;
+            if (opcionAsiste === 'no') {
+                grupoCantidad.style.display = 'none';
+                acompanianteContainer.style.display = 'none';
+                nombre2Input.required = false;
+                apellido2Input.required = false;
+            } else {
+                grupoCantidad.style.display = 'block';
+                if (selectCantidad.value === "2") {
+                    acompanianteContainer.style.display = 'block';
+                    nombre2Input.required = true;
+                    apellido2Input.required = true;
                 } else {
-                    grupoCantidad.style.display = 'block';
+                    acompanianteContainer.style.display = 'none';
+                    nombre2Input.required = false;
+                    apellido2Input.required = false;
                 }
-            });
-        });
+            }
+        }
+
+        radiosAsistencia.forEach(radio => radio.addEventListener('change', actualizarVisibilidadCampos));
+        selectCantidad.addEventListener('change', actualizarVisibilidadCampos);
 
         // CONEXIÓN A GOOGLE SHEETS
         const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbymbFApOian9LeKAk1mVBUAnRbUG3I1TOj_xjgz39EmTI75q5lxxhtFrdE2kHuqLuYGQg/exec";
@@ -755,31 +804,49 @@
             e.preventDefault();
 
             const opcionAsiste = document.querySelector('input[name="asistencia"]:checked').value;
+            const numPersonas = opcionAsiste === "si" ? parseInt(selectCantidad.value) : 0;
 
-            const datos = {
+            // Datos de la Persona 1
+            const datosP1 = {
                 nombre: document.getElementById("nombre").value,
                 apellido: document.getElementById("apellido").value,
                 asiste: opcionAsiste, 
-                cantidad: opcionAsiste === "si" ? document.getElementById("cantidad").value : 0
+                cantidad: numPersonas
             };
 
-            fetch(URL_SCRIPT, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify(datos)
+            // Promesa para enviar petición a Google Apps Script
+            const enviarRegistro = (datos) => {
+                return fetch(URL_SCRIPT, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(datos)
+                });
+            };
+
+            // Enviar Persona 1
+            enviarRegistro(datosP1)
+            .then(() => {
+                // Si son 2 personas y asiste, enviar el registro del acompañante debajo
+                if (opcionAsiste === "si" && numPersonas === 2) {
+                    const datosP2 = {
+                        nombre: document.getElementById("nombre2").value,
+                        apellido: document.getElementById("apellido2").value,
+                        asiste: opcionAsiste,
+                        cantidad: 0 // Marca de acompañante o secundario
+                    };
+                    return enviarRegistro(datosP2);
+                }
             })
             .then(() => {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Gracias por responder!',
-                    text: 'Hemos registrado tu respuesta correctamente.',
-                    confirmButtonColor: '#111111'
+                    text: 'Hemos registrado la respuesta correctamente.',
+                    confirmButtonColor: '#4A5D4E'
                 });
                 document.getElementById("rsvpForm").reset();
-                grupoCantidad.style.display = 'block';
+                actualizarVisibilidadCampos();
             })
             .catch(error => {
                 console.error("Error:", error);
@@ -787,7 +854,7 @@
                     icon: 'error',
                     title: 'Error',
                     text: 'Ocurrió un inconveniente al registrar la respuesta.',
-                    confirmButtonColor: '#111111'
+                    confirmButtonColor: '#4A5D4E'
                 });
             });
         });
