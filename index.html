@@ -803,49 +803,36 @@
         document.getElementById("rsvpForm").addEventListener("submit", function(e) {
             e.preventDefault();
 
+            const submitBtn = this.querySelector('.btn-submit');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Enviando...";
+
             const opcionAsiste = document.querySelector('input[name="asistencia"]:checked').value;
-            const textoAsistencia = opcionAsiste === "si" ? "Asistirá" : "No asistirá";
-            const numPersonas = opcionAsiste === "si" ? parseInt(selectCantidad.value) : 0;
+            const textoAsistencia = opcionAsiste === "si" ? "Confirmado" : "No asiste";
+            const cantidadPersonas = opcionAsiste === "si" ? selectCantidad.value : "0";
 
-            const nombreP1 = document.getElementById("nombre").value.trim();
-            const apellidoP1 = document.getElementById("apellido").value.trim();
-
-            // Fila 1: Titular de la invitación
-            const datosP1 = {
-                nombre: nombreP1,
-                apellido: apellidoP1,
-                asiste: textoAsistencia, 
-                cantidad: "Titular"
+            const data = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                asistencia: textoAsistencia,
+                cantidad: cantidadPersonas,
+                nombre2: (opcionAsiste === "si" && cantidadPersonas === "2") ? nombre2Input.value : "",
+                apellido2: (opcionAsiste === "si" && cantidadPersonas === "2") ? apellido2Input.value : ""
             };
 
-            const enviarRegistro = (datos) => {
-                return fetch(URL_SCRIPT, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(datos)
-                });
-            };
-
-            // Enviar Titular
-            enviarRegistro(datosP1)
-            .then(() => {
-                // Si son 2 personas y asiste, enviar el registro del acompañante especificando a quién acompaña
-                if (opcionAsiste === "si" && numPersonas === 2) {
-                    const datosP2 = {
-                        nombre: document.getElementById("nombre2").value.trim(),
-                        apellido: document.getElementById("apellido2").value.trim(),
-                        asiste: textoAsistencia,
-                        cantidad: `Acompañante de ${nombreP1} ${apellidoP1}`
-                    };
-                    return enviarRegistro(datosP2);
-                }
+            fetch(URL_SCRIPT, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
             })
             .then(() => {
                 Swal.fire({
                     icon: 'success',
-                    title: '¡Gracias por responder!',
-                    text: 'Hemos registrado la respuesta correctamente.',
+                    title: '¡Muchas Gracias!',
+                    text: 'Tu respuesta ha sido registrada exitosamente.',
                     confirmButtonColor: '#4A5D4E'
                 });
                 document.getElementById("rsvpForm").reset();
@@ -855,10 +842,14 @@
                 console.error("Error:", error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'Ocurrió un inconveniente al registrar la respuesta.',
+                    title: 'Oops...',
+                    text: 'Hubo un problema al enviar tu confirmación. Inténtalo nuevamente.',
                     confirmButtonColor: '#4A5D4E'
                 });
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Enviar Confirmación";
             });
         });
     </script>
