@@ -499,7 +499,7 @@
             cursor: pointer;
         }
 
-        /* Sección dinamica para el segundo invitado */
+        /* Sección dinámica para el segundo invitado */
         #acompaniante-container {
             display: none;
             background: var(--verde-musgo-claro);
@@ -616,7 +616,7 @@
                 </div>
             </section>
 
-            <!-- 3, 4, 5 y DETALLES ADICIONALES DEL EVENTO -->
+            <!-- DETALLES DEL EVENTO -->
             <section class="details-grid">
                 <!-- FECHA -->
                 <div class="detail-card">
@@ -658,7 +658,7 @@
                 </div>
             </section>
 
-           <!-- 6. MINI FORMULARIO RSVP -->
+            <!-- FORMULARIO RSVP -->
             <section class="rsvp-section">
                 <div class="rsvp-header">
                     <h2 class="rsvp-title font-serif">Confirmación de Asistencia</h2>
@@ -669,12 +669,12 @@
                     <!-- DATOS PERSONA 1 -->
                     <div class="form-group">
                         <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" id="nombre" class="form-input" placeholder="Ej. Juan" required>
+                        <input type="text" id="nombre" class="form-input" placeholder="Ej. Christopher" required>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="apellido">Apellido</label>
-                        <input type="text" id="apellido" class="form-input" placeholder="Ej. Pérez" required>
+                        <input type="text" id="apellido" class="form-input" placeholder="Ej. Hernandez" required>
                     </div>
 
                     <div class="form-group">
@@ -704,11 +704,11 @@
                         <div class="acompaniante-title"><i class="fa-solid fa-user-plus"></i> Datos del Acompañante</div>
                         <div class="form-group">
                             <label class="form-label" for="nombre2">Nombre del Acompañante</label>
-                            <input type="text" id="nombre2" class="form-input" placeholder="Ej. María">
+                            <input type="text" id="nombre2" class="form-input" placeholder="Ej. Debora">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="apellido2">Apellido del Acompañante</label>
-                            <input type="text" id="apellido2" class="form-input" placeholder="Ej. Gómez">
+                            <input type="text" id="apellido2" class="form-input" placeholder="Ej. Zarceño">
                         </div>
                     </div>
 
@@ -804,17 +804,20 @@
             e.preventDefault();
 
             const opcionAsiste = document.querySelector('input[name="asistencia"]:checked').value;
+            const textoAsistencia = opcionAsiste === "si" ? "Asistirá" : "No asistirá";
             const numPersonas = opcionAsiste === "si" ? parseInt(selectCantidad.value) : 0;
 
-            // Datos de la Persona 1
+            const nombreP1 = document.getElementById("nombre").value.trim();
+            const apellidoP1 = document.getElementById("apellido").value.trim();
+
+            // Fila 1: Titular de la invitación
             const datosP1 = {
-                nombre: document.getElementById("nombre").value,
-                apellido: document.getElementById("apellido").value,
-                asiste: opcionAsiste, 
-                cantidad: numPersonas
+                nombre: nombreP1,
+                apellido: apellidoP1,
+                asiste: textoAsistencia, 
+                cantidad: "Titular"
             };
 
-            // Promesa para enviar petición a Google Apps Script
             const enviarRegistro = (datos) => {
                 return fetch(URL_SCRIPT, {
                     method: "POST",
@@ -824,16 +827,16 @@
                 });
             };
 
-            // Enviar Persona 1
+            // Enviar Titular
             enviarRegistro(datosP1)
             .then(() => {
-                // Si son 2 personas y asiste, enviar el registro del acompañante debajo
+                // Si son 2 personas y asiste, enviar el registro del acompañante especificando a quién acompaña
                 if (opcionAsiste === "si" && numPersonas === 2) {
                     const datosP2 = {
-                        nombre: document.getElementById("nombre2").value,
-                        apellido: document.getElementById("apellido2").value,
-                        asiste: opcionAsiste,
-                        cantidad: 0 // Marca de acompañante o secundario
+                        nombre: document.getElementById("nombre2").value.trim(),
+                        apellido: document.getElementById("apellido2").value.trim(),
+                        asiste: textoAsistencia,
+                        cantidad: `Acompañante de ${nombreP1} ${apellidoP1}`
                     };
                     return enviarRegistro(datosP2);
                 }
