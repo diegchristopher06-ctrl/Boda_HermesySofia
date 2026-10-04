@@ -490,71 +490,66 @@
             accent-color: var(--verde-musgo);
             width: 18px;
             height: 18px;
-       document.getElementById("rsvpForm").addEventListener("submit", function(e) {
-            e.preventDefault();
+        }
 
-            // Obtener el radio seleccionado de manera precisa
-            const radioSeleccionado = document.querySelector('input[name="asistencia"]:checked');
-            const opcionAsiste = radioSeleccionado ? radioSeleccionado.value : "si";
-            
-            // Asignación correcta: "si" -> "Asistirá", "no" -> "No asistirá"
-            const textoAsistencia = (opcionAsiste === "si") ? "Asistirá" : "No asistirá";
-            const numPersonas = (opcionAsiste === "si") ? parseInt(selectCantidad.value) : 0;
+        .radio-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--verde-musgo-oscuro);
+            cursor: pointer;
+        }
 
-            const nombreP1 = document.getElementById("nombre").value.trim();
-            const apellidoP1 = document.getElementById("apellido").value.trim();
+        /* Sección dinámica para el segundo invitado */
+        #acompaniante-container {
+            display: none;
+            background: var(--verde-musgo-claro);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--dorado);
+            margin-bottom: 22px;
+        }
 
-            // Fila 1: Titular de la invitación
-            const datosP1 = {
-                nombre: nombreP1,
-                apellido: apellidoP1,
-                asiste: textoAsistencia, 
-                cantidad: "Titular"
-            };
+        .acompaniante-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--verde-musgo);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-            const enviarRegistro = (datos) => {
-                return fetch(URL_SCRIPT, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(datos)
-                });
-            };
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--verde-musgo);
+            color: var(--blanco);
+            border: 1px solid var(--dorado);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--sombra-card);
+            margin-top: 10px;
+        }
 
-            // Enviar Titular
-            enviarRegistro(datosP1)
-            .then(() => {
-                // Si asiste y son 2 personas, enviar el registro del acompañante
-                if (opcionAsiste === "si" && numPersonas === 2) {
-                    const datosP2 = {
-                        nombre: document.getElementById("nombre2").value.trim(),
-                        apellido: document.getElementById("apellido2").value.trim(),
-                        asiste: textoAsistencia,
-                        cantidad: `Acompañante de ${nombreP1} ${apellidoP1}`
-                    };
-                    return enviarRegistro(datosP2);
-                }
-            })
-            .then(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Gracias por responder!',
-                    text: 'Hemos registrado la respuesta correctamente.',
-                    confirmButtonColor: '#4A5D4E'
-                });
-                document.getElementById("rsvpForm").reset();
-                actualizarVisibilidadCampos();
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ocurrió un inconveniente al registrar la respuesta.',
-                    confirmButtonColor: '#4A5D4E'
-                });
-            });
-        });
+        .btn-submit:hover {
+            background: var(--dorado);
+            border-color: var(--verde-musgo);
+            color: var(--verde-musgo-oscuro);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+            color: var(--gris-texto);
+            letter-spacing: 1px;
+        }
+
         @media (max-width: 600px) {
             .envelope-wrapper { width: 300px; height: 215px; }
             .envelope-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 115px; }
@@ -869,4 +864,3 @@
     </script>
 </body>
 </html>
-            
