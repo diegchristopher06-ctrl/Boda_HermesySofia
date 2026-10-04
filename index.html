@@ -3,49 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boda Hermes & Sofía - Save Our Date</title>
-
-    <!-- ETIQUETAS PARA VISTA PREVIA EN WHATSAPP Y REDES SOCIALES -->
-    <meta property="og:title" content="Boda Hermes & Sofía">
-    <meta property="og:description" content="¡Acompáñanos a celebrar nuestro gran día!">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://diegchristopher06-ctrl.github.io/Boda_HermesySofia/">
-    <meta property="og:image" content="https://raw.githubusercontent.com/diegchristopher06-ctrl/Boda_HermesySofia/main/boda.png">
-    <meta property="og:image:secure_url" content="https://raw.githubusercontent.com/diegchristopher06-ctrl/Boda_HermesySofia/main/boda.png">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <title>Nuestra Boda</title>
     
-    <!-- Fuentes Google Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome para Íconos -->
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- SweetAlert2 para Alertas Interactivas -->
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
-            /* TEMÁTICA VERDE MUSGO, BLANCO, GRIS Y DORADO */
-            --bg-body: #F4F6F4;
-            --blanco: #FFFFFF;
-            --verde-musgo: #4A5D4E;
-            --verde-musgo-oscuro: #3B4A3E;
-            --verde-musgo-claro: #EAF0EC;
-            --dorado: #D4AF37;
-            --dorado-claro: #F4E8C1;
-            --gris-texto: #555555;
-            --gris-claro: #E0E0E0;
-            --sombra-elegante: 0 12px 35px rgba(74, 93, 78, 0.18);
-            --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --color-bg: #fcfbf9;
+            --color-primary: #4a5d4e;
+            --color-primary-light: #889e8f;
+            --color-accent: #c5a059;
+            --color-text: #333333;
+            --color-card-bg: #ffffff;
+            --color-envelope: #e2dcd5;
+            --color-envelope-dark: #d0c7bc;
+        }
 
-            /* Colores del sobre */
-            --sobre-papel: #4A5D4E;
-            --sobre-sombra: #3B4A3E;
-            --sobre-interior: #334035;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-script {
+            font-family: 'Alex Brush', cursive;
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* --- CONTENEDOR SOBRE DE INVITACIÓN --- */
+        .envelope-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--color-bg);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background-color: var(--color-envelope);
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 120px solid var(--color-envelope-dark);
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 3;
+        }
+
+        .envelope-seal {
+            position: absolute;
+            top: 100px;
+            width: 45px;
+            height: 45px;
+            background-color: var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 4;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-seal:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-open {
+            margin-top: 40px;
+            padding: 12px 30px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-open:hover {
+            background-color: var(--color-primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Clase para abrir sobre */
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .names {
+            font-size: 60px;
+            color: var(--color-primary);
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .sub-title {
+            font-size: 18px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--color-accent);
+        }
+
+        /* TARJETAS DE INFORMACIÓN */
+        .card {
+            background-color: var(--color-card-bg);
+            border-radius: 12px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .card-icon {
+            font-size: 30px;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        /* CUENTA REGRESIVA */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .countdown-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #777;
+        }
+
+        /* FORMULARIO RSVP */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--color-primary-light);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .names {
+                font-size: 45px;
+            }
+            .countdown-container {
+                gap: 10px;
+            }
+            .countdown-value {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SOBRE DE BIENVENIDA -->
+    <div class="envelope-container" id="envelope-container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-seal">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+        </div>
+        <button class="btn-open" id="openBtn">Abrir Invitación</button>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL DE LA INVITACIÓN -->
+    <div class="main-content" id="main-content">
+        <header>
+            <p class="sub-title">Nos Casamos</p>
+            <h1 class="names font-script">Nombre & Nombre</h1>
+            <p class="font-serif" style="font-size: 20px; font-style: italic; color: #666;">14 de Noviembre de 2026</p>
+        </header>
+
+        <!-- CUENTA REGRESIVA -->
+        <div class="card">
+            <div class="card-icon"><i class="fa-regular fa-clock"></i></div>
+            <h2 class="card-title font-serif">Cuenta Regresiva</h2>
+            <div class="countdown-container">
+                <div class="countdown-box">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-value" id="hours">00</span>Aquí tienes el código completo con las correcciones integradas (los radios de asistencia con los valores correctos y la columna de rol/acompañante bien configurada):
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Boda</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <link href="[https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap](https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap)" rel="stylesheet">
+    
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+    
+    <!-- SweetAlert2 para alertas elegantes -->
+    <script src="[https://cdn.jsdelivr.net/npm/sweetalert2@11](https://cdn.jsdelivr.net/npm/sweetalert2@11)"></script>
+
+    <style>
+        :root {
+            --primary-color: #4A5D4E;
+            --accent-color: #D4AF37;
+            --bg-color: #FAFAFA;
+            --text-color: #333333;
+            --envelope-bg: #EAE6DF;
+            --envelope-flap: #DDD8CF;
         }
 
         * {
@@ -56,159 +368,48 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--verde-musgo-oscuro);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
         }
 
-        .font-script { font-family: 'Alex Brush', cursive; }
-        .font-serif { font-family: 'Cinzel', serif; }
-
-        /* --- PANTALLA DEL SOBRE VECTORIAL REALISTA --- */
+        /* SOBRE DE BIENVENIDA */
         #envelope-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-body);
+            width: 100vw;
+            height: 100vh;
+            background-color: #2C3E35;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            padding: 20px;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
         }
 
         .envelope-wrapper {
             position: relative;
-            width: 350px;
-            height: 250px;
-            background-color: var(--sobre-papel);
-            border-radius: 6px;
-            box-shadow: var(--sombra-elegante);
-            perspective: 1000px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .envelope-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--sobre-interior);
-            border-radius: 6px;
-        }
-
-        .envelope-pocket {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .envelope-pocket::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 175px solid transparent;
-            border-right: 175px solid transparent;
-            border-bottom: 140px solid var(--sobre-papel);
-            filter: drop-shadow(0 -2px 3px rgba(0,0,0,0.15));
-        }
-
-        .envelope-pocket::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(to right, var(--sobre-sombra) 0%, transparent 100%) left / 175px 100% no-repeat,
-                linear-gradient(to left, var(--sobre-sombra) 0%, transparent 100%) right / 175px 100% no-repeat;
-            clip-path: polygon(0 0, 175px 125px, 0 250px, 100% 250px, 175px 125px, 100% 0);
-            opacity: 0.35;
+            width: 320px;
+            height: 220px;
+            background-color: var(--envelope-bg);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .envelope-flap {
             position: absolute;
             top: 0;
             left: 0;
-            width: 0;
-            height: 0;
-            border-left: 175px solid transparent;
-            border-right: 175px solid transparent;
-            border-top: 135px solid var(--sobre-papel);
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid var(--envelope-flap);
             transform-origin: top;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.4s;
-            z-index: 4;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .wax-seal {
-            position: absolute;
-            top: 105px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 58px;
-            height: 58px;
-            background: radial-gradient(circle, #F4E8C1 0%, #D4AF37 70%, #AA820A 100%);
-            border-radius: 50%;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255,255,255,0.6);
-            transition: transform 0.6s ease, opacity 0.4s ease;
-        }
-
-        .wax-seal i {
-            color: var(--verde-musgo-oscuro);
-            font-size: 1.6rem;
-        }
-
-        .envelope-title {
-            margin-top: 30px;
-            font-size: 2.2rem;
-            color: var(--verde-musgo-oscuro);
-            text-align: center;
-            letter-spacing: 2px;
-        }
-
-        .btn-open {
-            margin-top: 20px;
-            padding: 14px 35px;
-            background: var(--verde-musgo);
-            color: var(--blanco);
-            border: 1px solid var(--dorado);
-            border-radius: 30px;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: var(--sombra-elegante);
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-
-        .btn-open:hover {
-            background: var(--dorado);
-            border-color: var(--verde-musgo);
-            color: var(--verde-musgo-oscuro);
-            transform: scale(1.05);
+            transition: transform 0.8s ease;
+            z-index: 3;
         }
 
         .envelope-wrapper.open .envelope-flap {
@@ -216,9 +417,24 @@
             z-index: 1;
         }
 
-        .envelope-wrapper.open .wax-seal {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.5);
+        .btn-open {
+            position: absolute;
+            z-index: 10;
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-open:hover {
+            background-color: #B59326;
+            transform: scale(1.05);
         }
 
         .envelope-fade-out {
@@ -226,503 +442,260 @@
             visibility: hidden;
         }
 
-        /* --- SITIO WEB PRINCIPAL --- */
+        /* CONTENIDO PRINCIPAL */
         #main-content {
             opacity: 0;
-            transition: opacity 1.2s ease;
+            transition: opacity 1s ease;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         #main-content.visible {
             opacity: 1;
         }
 
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* PORTADA HERO */
-        .hero {
+        header {
             text-align: center;
-            padding: 30px 10px;
+            padding: 40px 0 20px;
         }
 
-        .image-frame {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 25px;
-            border-radius: 16px;
-            padding: 12px;
-            background: var(--blanco);
-            box-shadow: var(--sombra-card);
-            border: 2px solid var(--verde-musgo);
-            max-width: 100%;
-        }
-
-        .hero-img {
-            max-width: 100%;
-            width: 500px;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            letter-spacing: 6px;
-            color: var(--verde-musgo-oscuro);
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        .hero-subtitle {
-            font-size: 2.8rem;
-            color: var(--dorado);
+        .names {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-color);
             margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
         }
 
         /* CUENTA ATRÁS */
         .countdown-container {
-            background: var(--blanco);
-            border-radius: 16px;
-            padding: 25px 15px;
-            margin: 30px 0;
-            box-shadow: var(--sombra-card);
-            border: 1px solid var(--gris-claro);
-            border-top: 4px solid var(--verde-musgo);
             text-align: center;
+            margin: 30px 0;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .countdown-title {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--verde-musgo);
+            font-family: 'Cinzel', serif;
             margin-bottom: 15px;
+            color: var(--primary-color);
         }
 
-        .countdown-timer {
+        .timer {
             display: flex;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
         }
 
-        .time-box {
-            background: var(--verde-musgo-claro);
-            border-radius: 10px;
-            padding: 12px 20px;
-            min-width: 80px;
-            border: 1px solid rgba(74, 93, 78, 0.2);
+        .timer-box {
+            background: var(--bg-color);
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 65px;
         }
 
-        .time-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--verde-musgo-oscuro);
-            display: block;
-        }
-
-        .time-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gris-texto);
-        }
-
-        /* DETALLES DEL EVENTO */
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .detail-card {
-            background: var(--blanco);
-            padding: 30px 20px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: var(--sombra-card);
-            border: 1px solid var(--gris-claro);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .detail-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--sombra-elegante);
-        }
-
-        .detail-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--verde-musgo-claro);
-            color: var(--verde-musgo);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
+        .timer-number {
             font-size: 1.5rem;
-            border: 1px solid var(--dorado);
+            font-weight: 600;
+            color: var(--primary-color);
         }
 
-        .detail-title {
-            font-size: 0.9rem;
+        .timer-label {
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--gris-texto);
-            margin-bottom: 8px;
-        }
-
-        .detail-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--verde-musgo-oscuro);
-        }
-
-        .btn-maps {
-            display: inline-block;
-            margin-top: 14px;
-            padding: 9px 18px;
-            background: transparent;
-            color: var(--verde-musgo);
-            border: 1px solid var(--verde-musgo);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .btn-maps:hover {
-            background: var(--verde-musgo);
-            color: var(--blanco);
+            color: #777;
         }
 
         /* FORMULARIO RSVP */
         .rsvp-section {
-            background: var(--blanco);
-            border-radius: 18px;
-            padding: 40px 30px;
-            margin: 40px 0;
-            box-shadow: var(--sombra-card);
-            border: 1px solid var(--gris-claro);
-            border-top: 5px solid var(--dorado);
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
         }
 
-        .rsvp-header {
+        .section-title {
+            font-family: 'Cinzel', serif;
             text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .rsvp-title {
-            font-size: 2.2rem;
-            color: var(--verde-musgo-oscuro);
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .rsvp-subtitle {
-            font-size: 0.95rem;
-            color: var(--gris-texto);
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
         }
 
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
-        .form-label {
+        label {
             display: block;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
             margin-bottom: 8px;
-            color: var(--verde-musgo-oscuro);
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .form-input, .form-select {
+        input[type="text"], select {
             width: 100%;
-            padding: 14px 16px;
-            border: 1px solid var(--gris-claro);
-            border-radius: 8px;
-            background-color: var(--verde-musgo-claro);
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--verde-musgo-oscuro);
-            outline: none;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
             transition: border-color 0.3s ease;
         }
 
-        .form-input:focus, .form-select:focus {
-            border-color: var(--verde-musgo);
-            background-color: var(--blanco);
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
         }
 
         .radio-group {
             display: flex;
-            gap: 15px;
-            flex-direction: column;
+            gap: 20px;
+            margin-top: 5px;
         }
 
         .radio-option {
             display: flex;
             align-items: center;
-            background: var(--verde-musgo-claro);
-            padding: 14px 16px;
-            border-radius: 8px;
-            border: 1px solid var(--gris-claro);
+            gap: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .radio-option:hover {
-            border-color: var(--verde-musgo);
-        }
-
-        .radio-option input[type="radio"] {
-            margin-right: 12px;
-            accent-color: var(--verde-musgo);
-            width: 18px;
-            height: 18px;
-        }
-
-        .radio-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--verde-musgo-oscuro);
-            cursor: pointer;
-        }
-
-        /* Sección dinámica para el segundo invitado */
-        #acompaniante-container {
-            display: none;
-            background: var(--verde-musgo-claro);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid var(--dorado);
-            margin-bottom: 22px;
-        }
-
-        .acompaniante-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--verde-musgo);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 16px;
-            background: var(--verde-musgo);
-            color: var(--blanco);
-            border: 1px solid var(--dorado);
-            border-radius: 30px;
-            font-size: 0.95rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
             font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--sombra-card);
-            margin-top: 10px;
+            transition: background-color 0.3s ease;
         }
 
         .btn-submit:hover {
-            background: var(--dorado);
-            border-color: var(--verde-musgo);
-            color: var(--verde-musgo-oscuro);
-            transform: translateY(-2px);
+            background-color: #38473B;
         }
 
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            font-size: 0.9rem;
-            color: var(--gris-texto);
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 600px) {
-            .envelope-wrapper { width: 300px; height: 215px; }
-            .envelope-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 115px; }
-            .envelope-pocket::after { border-left-width: 150px; border-right-width: 150px; border-bottom-width: 120px; }
-            .wax-seal { top: 90px; width: 50px; height: 50px; }
-            .wax-seal i { font-size: 1.3rem; }
-            .hero-title { font-size: 2.2rem; }
-            .hero-subtitle { font-size: 2.2rem; }
-            .hero-img { width: 100%; }
-            .time-box { min-width: 65px; padding: 8px 12px; }
-            .time-number { font-size: 1.5rem; }
-            .rsvp-section { padding: 25px 18px; }
+        #acompaniante-container {
+            display: none;
+            background: #F4F6F4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary-color);
         }
     </style>
 </head>
 <body>
 
-    <!-- ✉️ SOBRE VECTORIAL CON SELLO DE LACRE Y ANIMACIÓN 3D PERFECTA -->
+    <!-- SOBRE DE BIENVENIDA -->
     <div id="envelope-container">
         <div class="envelope-wrapper" id="envelope">
             <div class="envelope-flap"></div>
-            <div class="wax-seal">
-                <i class="fa-solid fa-wheat-awn"></i>
-            </div>
-            <div class="envelope-pocket"></div>
+            <button class="btn-open" id="openBtn">Abrir Invitación</button>
         </div>
-        <h2 class="envelope-title font-serif">Hermes & Sofía</h2>
-        <p class="font-script" style="font-size: 2rem; color: var(--dorado);">Nuestra Invitación de Boda</p>
-        <button class="btn-open font-serif" id="openBtn">Abrir Invitación</button>
     </div>
 
-    <!-- 🌐 SITIO WEB PRINCIPAL DE LA BODA -->
+    <!-- CONTENIDO PRINCIPAL -->
     <div id="main-content">
-        <div class="container">
-            <!-- 1. PORTADA HERO -->
-            <header class="hero">
-                <div class="image-frame">
-                   <img src="boda.png" alt="Hermes & Sofía" class="hero-img">
+        <header>
+            <p class="subtitle">NUESTRA BODA</p>
+            <h1 class="names">Nombre & Nombre</h1>
+            <p class="subtitle">14 DE NOVIEMBRE DE 2026</p>
+        </header>
+
+        <!-- CUENTA ATRÁS -->
+        <div class="countdown-container">
+            <h2 class="countdown-title">FALTAN:</h2>
+            <div class="timer">
+                <div class="timer-box">
+                    <span class="timer-number" id="days">00</span>
+                    <span class="timer-label">Días</span>
                 </div>
-                <p class="hero-subtitle font-script">Save Our Date</p>
-                <h1 class="hero-title font-serif">HERMES & SOFÍA</h1>
-            </header>
-
-            <!-- 2. CUENTA ATRÁS -->
-            <section class="countdown-container">
-                <h2 class="countdown-title font-serif">Tiempo restante para el gran día</h2>
-                <div class="countdown-timer">
-                    <div class="time-box">
-                        <span class="time-number" id="days">00</span>
-                        <span class="time-label">Días</span>
-                    </div>
-                    <div class="time-box">
-                        <span class="time-number" id="hours">00</span>
-                        <span class="time-label">Horas</span>
-                    </div>
-                    <div class="time-box">
-                        <span class="time-number" id="minutes">00</span>
-                        <span class="time-label">Min</span>
-                    </div>
-                    <div class="time-box">
-                        <span class="time-number" id="seconds">00</span>
-                        <span class="time-label">Seg</span>
-                    </div>
+                <div class="timer-box">
+                    <span class="timer-number" id="hours">00</span>
+                    <span class="timer-label">Horas</span>
                 </div>
-            </section>
-
-            <!-- DETALLES DEL EVENTO -->
-            <section class="details-grid">
-                <!-- FECHA -->
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fa-regular fa-calendar-days"></i>
-                    </div>
-                    <div class="detail-title font-serif">Fecha</div>
-                    <div class="detail-text">Sábado 14 de Noviembre 2026</div>
+                <div class="timer-box">
+                    <span class="timer-number" id="minutes">00</span>
+                    <span class="timer-label">Min</span>
                 </div>
-
-                <!-- LUGAR -->
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-                    <div class="detail-title font-serif">Lugar</div>
-                    <div class="detail-text">Eventos Arizona</div>
-                    <a href="https://maps.google.com/?q=Eventos+Arizona" target="_blank" class="btn-maps">
-                        <i class="fa-solid fa-map-location-dot"></i> Ver en Google Maps
-                    </a>
+                <div class="timer-box">
+                    <span class="timer-number" id="seconds">00</span>
+                    <span class="timer-label">Seg</span>
                 </div>
-
-                <!-- HORA -->
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fa-regular fa-clock"></i>
-                    </div>
-                    <div class="detail-title font-serif">Hora</div>
-                    <div class="detail-text">4:00 PM</div>
-                </div>
-
-                <!-- VESTIMENTA -->
-                <div class="detail-card">
-                    <div class="detail-icon">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <div class="detail-title font-serif">Código de Vestimenta</div>
-                    <div class="detail-text">Semiformal</div>
-                </div>
-            </section>
-
-            <!-- FORMULARIO RSVP -->
-            <section class="rsvp-section">
-                <div class="rsvp-header">
-                    <h2 class="rsvp-title font-serif">Confirmación de Asistencia</h2>
-                    <p class="rsvp-subtitle">Por favor confirma tu presencia antes del evento</p>
-                </div>
-
-                <form id="rsvpForm">
-                    <!-- DATOS PERSONA 1 -->
-                    <div class="form-group">
-                        <label class="form-label" for="nombre">Nombre</label>
-                        <input type="text" id="nombre" class="form-input" placeholder="Ej. Christopher" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="apellido">Apellido</label>
-                        <input type="text" id="apellido" class="form-input" placeholder="Ej. Hernandez" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">¿Nos acompañarás?</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="asistencia" value="si" required checked>
-                                <span class="radio-label">Acepto invitación / ¡Ahí estaré!</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="asistencia" value="no">
-                                <span class="radio-label">No podré asistir</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="grupo-cantidad">
-                        <label class="form-label" for="cantidad">Número de personas (Incluyéndote)</label>
-                        <select id="cantidad" class="form-select">
-                            <option value="1">1 Persona</option>
-                            <option value="2">2 Personas</option>
-                        </select>
-                    </div>
-
-                    <!-- DATOS PERSONA 2 (ACOMPAÑANTE - DESPLEGABLE) -->
-                    <div id="acompaniante-container">
-                        <div class="acompaniante-title"><i class="fa-solid fa-user-plus"></i> Datos del Acompañante</div>
-                        <div class="form-group">
-                            <label class="form-label" for="nombre2">Nombre del Acompañante</label>
-                            <input type="text" id="nombre2" class="form-input" placeholder="Ej. Debora">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="apellido2">Apellido del Acompañante</label>
-                            <input type="text" id="apellido2" class="form-input" placeholder="Ej. Zarceño">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit font-serif">Enviar Confirmación</button>
-                </form>
-            </section>
-
-            <footer>
-                <p class="font-serif">Hermes & Sofía — 14.11.2026</p>
-            </footer>
+            </div>
         </div>
+
+        <!-- FORMULARIO RSVP -->
+        <section class="rsvp-section">
+            <h2 class="section-title">Confirmar Asistencia</h2>
+            <form id="rsvpForm">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                </div>
+
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" required placeholder="Tu apellido">
+                </div>
+
+                <div class="form-group">
+                    <label>¿Nos acompañarás?</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="asistencia" value="si" checked>
+                            <span>Sí, ahí estaré</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="asistencia" value="no">
+                            <span>No podré asistir</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="grupo-cantidad">
+                    <label for="cantidad">Número de personas</label>
+                    <select id="cantidad" name="cantidad">
+                        <option value="1">1 Persona</option>
+                        <option value="2">2 Personas (Con acompañante)</option>
+                    </select>
+                </div>
+
+                <!-- CAMPOS PARA ACOMPAÑANTE -->
+                <div id="acompaniante-container">
+                    <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--primary-color);">Datos del Acompañante</h3>
+                    <div class="form-group">
+                        <label for="nombre2">Nombre del acompañante</label>
+                        <input type="text" id="nombre2" name="nombre2" placeholder="Nombre del acompañante">
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido2">Apellido del acompañante</label>
+                        <input type="text" id="apellido2" name="apellido2" placeholder="Apellido del acompañante">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Respuesta</button>
+            </form>
+        </section>
     </div>
 
-    <!-- LÓGICA EN JAVASCRIPT -->
     <script>
         // ANIMACIÓN DE APERTURA DEL SOBRE
         const openBtn = document.getElementById('openBtn');
@@ -774,7 +747,9 @@
         const apellido2Input = document.getElementById('apellido2');
 
         function actualizarVisibilidadCampos() {
-            const opcionAsiste = document.querySelector('input[name="asistencia"]:checked').value;
+            const radioSeleccionado = document.querySelector('input[name="asistencia"]:checked');
+            const opcionAsiste = radioSeleccionado ? radioSeleccionado.value : "si";
+
             if (opcionAsiste === 'no') {
                 grupoCantidad.style.display = 'none';
                 acompanianteContainer.style.display = 'none';
@@ -798,7 +773,7 @@
         selectCantidad.addEventListener('change', actualizarVisibilidadCampos);
 
         // CONEXIÓN A GOOGLE SHEETS
-        const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbymbFApOian9LeKAk1mVBUAnRbUG3I1TOj_xjgz39EmTI75q5lxxhtFrdE2kHuqLuYGQg/exec";
+        const URL_SCRIPT = "[https://script.google.com/macros/s/AKfycbymbFApOian9LeKAk1mVBUAnRbUG3I1TOj_xjgz39EmTI75q5lxxhtFrdE2kHuqLuYGQg/exec](https://script.google.com/macros/s/AKfycbymbFApOian9LeKAk1mVBUAnRbUG3I1TOj_xjgz39EmTI75q5lxxhtFrdE2kHuqLuYGQg/exec)";
 
         document.getElementById("rsvpForm").addEventListener("submit", function(e) {
             e.preventDefault();
@@ -810,11 +785,11 @@
             const nombreP1 = document.getElementById("nombre").value.trim();
             const apellidoP1 = document.getElementById("apellido").value.trim();
 
-            // Fila 1: Titular de la invitación
+            // Datos Titular / Persona 1
             const datosP1 = {
                 nombre: nombreP1,
                 apellido: apellidoP1,
-                asiste: textoAsistencia, 
+                asiste: textoAsistencia,
                 cantidad: "Titular"
             };
 
@@ -830,12 +805,15 @@
             // Enviar Titular
             enviarRegistro(datosP1)
             .then(() => {
-                // Si son 2 personas y asiste, enviar el registro del acompañante especificando a quién acompaña
+                // Si selecciona 2 personas y SÍ asiste, envía la fila del acompañante
                 if (opcionAsiste === "si" && numPersonas === 2) {
+                    const nombreP2 = document.getElementById("nombre2").value.trim();
+                    const apellidoP2 = document.getElementById("apellido2").value.trim();
+
                     const datosP2 = {
-                        nombre: document.getElementById("nombre2").value.trim(),
-                        apellido: document.getElementById("apellido2").value.trim(),
-                        asiste: textoAsistencia,
+                        nombre: nombreP2,
+                        apellido: apellidoP2,
+                        asiste: "Asistirá",
                         cantidad: `Acompañante de ${nombreP1} ${apellidoP1}`
                     };
                     return enviarRegistro(datosP2);
@@ -864,3 +842,5 @@
     </script>
 </body>
 </html>
+
+            
