@@ -280,14 +280,16 @@
             letter-spacing: 1px;
         }
 
-        /* Texto Dorado ajustado a un tamaño más grande */
-        .hero-subtitle {
-            font-size: 3.8rem;
-            letter-spacing: 2px;
-            color: var(--dorado);
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
+      /* Texto Dorado ajustado a un grosor más fino y con delineado negro delgado */
+.hero-subtitle {
+    font-size: 3.8rem;
+    letter-spacing: 2px;
+    color: var(--dorado);
+    margin-bottom: 5px;
+    font-weight: 400; /* <--- Cambiado de 700 a 400 para hacer la letra más delgada */
+    -webkit-text-stroke: 0.6px #000000; /* <--- Delineado negro muy delgado */
+    text-stroke: 0.6px #000000;
+}
 
         /* CUENTA ATRÁS */
         .countdown-container {
